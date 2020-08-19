@@ -8,9 +8,12 @@
 @include('layouts._header')
 
 <div class="container">
-<div class="offset-md-1 col-md-10">
-    @yield('content')
-    @include('layouts._footer')
-</div></div>
+    <div class="offset-md-1 col-md-10">
+        @include('layouts._messages')
+        @yield('content')
+        @include('layouts._footer')
+    </div>
+</div>
+<script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
