@@ -27,10 +27,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function feed()
+    {
+        return $this->statuses()
+            ->orderBy('created_at', 'desc');
+    }
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
+    }
 
     public function gravatar($size = '100')
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
         return "http://www.gravatar.com/avatar/$hash?s=$size";
     }
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($user) {
+            $user->activation_token = str_random(30);
+        });
+    }
+
 }
